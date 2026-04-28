@@ -32,18 +32,119 @@ const scryftBlocks = Blockly.Theme.defineTheme('scryftBlocks', {
             colourPrimary: '#6366f1',
             colourSecondary: '#818cf8',
             colourTertiary: '#4338ca'
+        },
+        // ── NEW ──────────────────────────────────────────────────────────────
+        javascript_blocks: {
+            colourPrimary: '#f0db4f',
+            colourSecondary: '#f7e87a',
+            colourTertiary: '#b89f00'
         }
     },
 
     categoryStyles: {
-        logic_category: { colour: '#ff6b6b' },
-        loop_category: { colour: '#f59e0b' },
-        math_category: { colour: '#22c55e' },
-        text_category: { colour: '#a855f7' },
-        variable_category: { colour: '#06b6d4' },
-        procedure_category: { colour: '#6366f1' }
+        logic_category:     { colour: '#ff6b6b' },
+        loop_category:      { colour: '#f59e0b' },
+        math_category:      { colour: '#22c55e' },
+        text_category:      { colour: '#a855f7' },
+        variable_category:  { colour: '#06b6d4' },
+        procedure_category: { colour: '#6366f1' },
+        // ── NEW ──────────────────────────────────────────────────────────────
+        javascript_category: { colour: '#f0db4f' }
     }
 });
+
+// ── Custom JavaScript blocks ──────────────────────────────────────────────────
+
+Blockly.common.defineBlocks({
+    // console.log( <value> )
+    js_console_log: {
+        type: 'js_console_log',
+        message0: 'console.log %1',
+        args0: [{ type: 'input_value', name: 'VALUE' }],
+        previousStatement: null,
+        nextStatement: null,
+        style: 'javascript_blocks',
+        tooltip: 'Log a value to the browser console.',
+        helpUrl: ''
+    },
+
+    // window.alert( <value> )
+    js_alert: {
+        type: 'js_alert',
+        message0: 'alert %1',
+        args0: [{ type: 'input_value', name: 'VALUE', check: 'String' }],
+        previousStatement: null,
+        nextStatement: null,
+        style: 'javascript_blocks',
+        tooltip: 'Show a browser alert dialog.',
+        helpUrl: ''
+    },
+
+    // window.prompt( <text> )  →  returns String
+    js_prompt: {
+        type: 'js_prompt',
+        message0: 'prompt %1',
+        args0: [{ type: 'field_input', name: 'TEXT', text: 'Enter value' }],
+        output: 'String',
+        style: 'javascript_blocks',
+        tooltip: 'Ask the user for input and return the result as a string.',
+        helpUrl: ''
+    },
+
+    // // <comment text>
+    js_comment: {
+        type: 'js_comment',
+        message0: '// %1',
+        args0: [{ type: 'field_input', name: 'TEXT', text: 'comment' }],
+        previousStatement: null,
+        nextStatement: null,
+        style: 'javascript_blocks',
+        tooltip: 'Insert a single-line JavaScript comment.',
+        helpUrl: ''
+    },
+
+    // Raw JavaScript code injection
+    js_raw_code: {
+        type: 'js_raw_code',
+        message0: 'raw JS %1',
+        args0: [{ type: 'field_multilineInput', name: 'CODE', text: '// your code here' }],
+        previousStatement: null,
+        nextStatement: null,
+        style: 'javascript_blocks',
+        tooltip: 'Inject raw JavaScript code directly.',
+        helpUrl: ''
+    }
+});
+
+// ── Code generators ───────────────────────────────────────────────────────────
+
+javascript.forBlock['js_console_log'] = function (block, generator) {
+    const value = generator.valueToCode(block, 'VALUE', javascript.Order.NONE) || 'null';
+    return `console.log(${value});\n`;
+};
+
+javascript.forBlock['js_alert'] = function (block, generator) {
+    const value = generator.valueToCode(block, 'VALUE', javascript.Order.NONE) || '\'\'';
+    return `window.alert(${value});\n`;
+};
+
+javascript.forBlock['js_prompt'] = function (block, generator) {
+    const text = block.getFieldValue('TEXT') || '';
+    const escaped = text.replace(/'/g, "\\'");
+    return [`window.prompt('${escaped}')`, javascript.Order.FUNCTION_CALL];
+};
+
+javascript.forBlock['js_comment'] = function (block, generator) {
+    const text = block.getFieldValue('TEXT') || '';
+    return `// ${text}\n`;
+};
+
+javascript.forBlock['js_raw_code'] = function (block, generator) {
+    const code = block.getFieldValue('CODE') || '';
+    return `${code}\n`;
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 const blocklyDiv = document.getElementById('blocklyDiv');
 
@@ -91,6 +192,13 @@ function getToolbox() {
             <block type="text_append"></block>
             <block type="text_length"></block>
         </category>
+        <category name="JavaScript" categorystyle="javascript_category">
+            <block type="js_console_log"></block>
+            <block type="js_alert"></block>
+            <block type="js_prompt"></block>
+            <block type="js_comment"></block>
+            <block type="js_raw_code"></block>
+        </category>
         <category name="Arithmetic" categorystyle="math_category">
             <block type="math_number"></block>
             <block type="math_arithmetic"></block>
@@ -112,4 +220,3 @@ window.addEventListener('resize', () => {
 setTimeout(() => {
     Blockly.svgResize(workspace);
 }, 100);
-
