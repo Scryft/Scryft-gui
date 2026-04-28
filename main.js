@@ -1,9 +1,56 @@
-// Initialize Blockly workspace
+// theme stuff
+const scratchLikeTheme = Blockly.Theme.defineTheme('scryftBlocks', {
+    base: Blockly.Themes.Dark,
+
+    blockStyles: {
+        logic_blocks: {
+            colourPrimary: '#ff6b6b',
+            colourSecondary: '#ff8787',
+            colourTertiary: '#c92a2a'
+        },
+        loop_blocks: {
+            colourPrimary: '#f59e0b',
+            colourSecondary: '#fbbf24',
+            colourTertiary: '#b45309'
+        },
+        math_blocks: {
+            colourPrimary: '#22c55e',
+            colourSecondary: '#4ade80',
+            colourTertiary: '#15803d'
+        },
+        text_blocks: {
+            colourPrimary: '#a855f7',
+            colourSecondary: '#c084fc',
+            colourTertiary: '#6b21a8'
+        },
+        variable_blocks: {
+            colourPrimary: '#06b6d4',
+            colourSecondary: '#22d3ee',
+            colourTertiary: '#0e7490'
+        },
+        procedure_blocks: {
+            colourPrimary: '#6366f1',
+            colourSecondary: '#818cf8',
+            colourTertiary: '#4338ca'
+        }
+    },
+
+    categoryStyles: {
+        logic_category: { colour: '#ff6b6b' },
+        loop_category: { colour: '#f59e0b' },
+        math_category: { colour: '#22c55e' },
+        text_category: { colour: '#a855f7' },
+        variable_category: { colour: '#06b6d4' },
+        procedure_category: { colour: '#6366f1' }
+    }
+});
+
 const blocklyDiv = document.getElementById('blocklyDiv');
 
 const workspace = Blockly.inject(blocklyDiv, {
     toolbox: getToolbox(),
-    theme: Blockly.Themes.Dark,
+    renderer: 'zelos',
+    theme: scryftBlocks,
     move: {
         scrollbars: true,
         drag: true,
