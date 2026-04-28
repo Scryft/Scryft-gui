@@ -118,28 +118,28 @@ Blockly.common.defineBlocks({
 
 // ── Code generators ───────────────────────────────────────────────────────────
 
-javascript.forBlock['js_console_log'] = function (block, generator) {
+Blockly.javascript.forBlock['js_console_log'] = function (block, generator) {
     const value = generator.valueToCode(block, 'VALUE', javascript.Order.NONE) || 'null';
     return `console.log(${value});\n`;
 };
 
-javascript.forBlock['js_alert'] = function (block, generator) {
+Blockly.javascript.forBlock['js_alert'] = function (block, generator) {
     const value = generator.valueToCode(block, 'VALUE', javascript.Order.NONE) || '\'\'';
     return `window.alert(${value});\n`;
 };
 
-javascript.forBlock['js_prompt'] = function (block, generator) {
+Blockly.javascript.forBlock['js_prompt'] = function (block, generator) {
     const text = block.getFieldValue('TEXT') || '';
     const escaped = text.replace(/'/g, "\\'");
     return [`window.prompt('${escaped}')`, javascript.Order.FUNCTION_CALL];
 };
 
-javascript.forBlock['js_comment'] = function (block, generator) {
+Blockly.javascript.forBlock['js_comment'] = function (block, generator) {
     const text = block.getFieldValue('TEXT') || '';
     return `// ${text}\n`;
 };
 
-javascript.forBlock['js_raw_code'] = function (block, generator) {
+Blockly.javascript.forBlock['js_raw_code'] = function (block, generator) {
     const code = block.getFieldValue('CODE') || '';
     return `${code}\n`;
 };
