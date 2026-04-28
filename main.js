@@ -1,5 +1,5 @@
 // theme stuff
-const scratchLikeTheme = Blockly.Theme.defineTheme('scryftBlocks', {
+const scryftBlocks = Blockly.Theme.defineTheme('scryftBlocks', {
     base: Blockly.Themes.Dark,
 
     blockStyles: {
