@@ -119,19 +119,19 @@ Blockly.common.defineBlocks({
 // ── Code generators ───────────────────────────────────────────────────────────
 
 Blockly.javascript.forBlock['js_console_log'] = function (block, generator) {
-    const value = generator.valueToCode(block, 'VALUE', javascript.Order.NONE) || 'null';
+    const value = generator.valueToCode(block, 'VALUE', Blockly.javascript.Order.NONE) || 'null';
     return `console.log(${value});\n`;
 };
 
 Blockly.javascript.forBlock['js_alert'] = function (block, generator) {
-    const value = generator.valueToCode(block, 'VALUE', javascript.Order.NONE) || '\'\'';
+    const value = generator.valueToCode(block, 'VALUE', Blockly.javascript.Order.NONE) || '\'\'';
     return `window.alert(${value});\n`;
 };
 
 Blockly.javascript.forBlock['js_prompt'] = function (block, generator) {
     const text = block.getFieldValue('TEXT') || '';
     const escaped = text.replace(/'/g, "\\'");
-    return [`window.prompt('${escaped}')`, javascript.Order.FUNCTION_CALL];
+    return [`window.prompt('${escaped}')`, Blockly.javascript.Order.FUNCTION_CALL];
 };
 
 Blockly.javascript.forBlock['js_comment'] = function (block, generator) {
