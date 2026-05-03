@@ -55,7 +55,7 @@ const scryftBlocks = Blockly.Theme.defineTheme('scryftBlocks', {
 
 // ── Custom JavaScript blocks ──────────────────────────────────────────────────
 
-Blockly.common.defineBlocks({
+Blockly.common.defineBlocksWithJsonArray({
     // console.log( <value> )
     js_console_log: {
         type: 'js_console_log',
